@@ -2,19 +2,20 @@
 Attempt at constructor-based classes or something like that
 """
 import mmap
-import csv
 
+
+buf = mmap.mmap(-1, 2732, u"Local\\acpmf_physics")
 class SPageFilePhysics:
-    def __init__ (self, buffer):
-        self.packetId = int(buffer[0])
-        self.gas = float(buffer[1])
-        self.brake
-        self.fuel
-        self.gear
-        self.rpm
-        self.steerAngle
-        self.speedKmh
-        self.velocity #array
+    def __init__ (self, buf):
+        self.packetId               =buf[0]
+        self.gas                    =buf[1]
+        self.brake                  =buf[2]
+        self.fuel                   =buf[3]
+        self.gear                   =buf[4]
+        self.rpm                    =buf[5]
+        self.steerAngle             =buf[6]
+        self.speedKmh               =buf[7]
+        self.velocity               =[buf[8],buf[9],buf[10]]
         self.accG #array
         self.wheelSlip #array
         self.wheelLoad #nu array
@@ -91,3 +92,7 @@ class SPageFilePhysics:
         self.slipVibrations
         self.gVibrations
         self.absVibrations
+
+#buf = mmap.mmap(-1, 2732, u"Local\\acpmf_physics")
+physics = SPageFilePhysics(buf)
+print(physics.velocity)
